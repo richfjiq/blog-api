@@ -1,5 +1,9 @@
-const sum = (): number => {
-	return 9 + 8;
-};
+import dotenv from 'dotenv';
 
-sum();
+import { Server } from './models';
+
+dotenv.config();
+
+const server = new Server();
+
+server.listen();
