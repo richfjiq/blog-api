@@ -2,5 +2,7 @@ export interface IBlog {
 	title: string;
 	author: string;
 	description: string;
-	date?: string;
+	image_url?: string;
+	createdAt?: string;
+	updatedAt?: string;
 }
