@@ -1,11 +1,17 @@
 import type { Request, Response } from 'express';
+import dotenv from 'dotenv';
 
 import type { IBlog } from '../interfaces/blog';
 import { db } from '../database';
 import Blog from '../models/Blog';
 
+dotenv.config();
+const defaultImage = process.env.DEFAULT_IMAGE as string;
+
 export const createBlog = async (req: Request, res: Response): Promise<void> => {
-	const { title, author, description } = req.body as IBlog;
+	// eslint-disable-next-line @typescript-eslint/naming-convention
+	const { title, author, description, image_url } = req.body as IBlog;
+	const image = image_url ?? defaultImage;
 
 	try {
 		await db.connect();
@@ -13,6 +19,7 @@ export const createBlog = async (req: Request, res: Response): Promise<void> => 
 			title,
 			author,
 			description,
+			image_url: image,
 		});
 		await blog.save();
 		await db.disconnect();

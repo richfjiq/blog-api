@@ -2,6 +2,8 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 
+import blogRoutes from '../routes/blogs';
+
 dotenv.config();
 
 class Server {
@@ -31,7 +33,7 @@ class Server {
 	}
 
 	routes(): void {
-		this.app.use(this.apiPaths.blogs, (req, res) => 'hello');
+		this.app.use(this.apiPaths.blogs, blogRoutes);
 	}
 }
 
