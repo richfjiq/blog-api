@@ -11,7 +11,11 @@ const defaultImage = process.env.DEFAULT_IMAGE as string;
 export const createBlog = async (req: Request, res: Response): Promise<void> => {
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	const { title, author, description, image_url } = req.body as IBlog;
-	const image = image_url ?? defaultImage;
+	let image = '';
+
+	if (image_url === '') {
+		image = defaultImage;
+	}
 
 	try {
 		await db.connect();
@@ -26,6 +30,8 @@ export const createBlog = async (req: Request, res: Response): Promise<void> => 
 		res.status(201).json(blog);
 	} catch (error) {
 		await db.disconnect();
+		// eslint-disable-next-line no-console
+		console.log({ error });
 		res.status(400).json({ message: 'Server error.' });
 	}
 };
